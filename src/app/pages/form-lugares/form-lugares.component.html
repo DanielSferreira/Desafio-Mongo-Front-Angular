@@ -1,0 +1,30 @@
+<div class="card" action="">
+    <h1>Lugares que eu quero ir:</h1>
+    <form class="form" [formGroup]="form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Lugar</mat-label>
+        <input matInput autofocus formControlName="lugar">
+      </mat-form-field>
+  
+      <mat-form-field class="example-full-width">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="descricao"></textarea>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Status:</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let estado of Estados" [value]="estado.value" >
+            {{estado.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field class="example-full-width">
+        <mat-label>Pontos Turisticos</mat-label>
+        <textarea matInput formControlName="pontosTuristicos"></textarea>
+      </mat-form-field>
+  
+      <button type="submit" mat-button (click)="setlugar()"> Enbiar </button>
+    </form>
+  </div>

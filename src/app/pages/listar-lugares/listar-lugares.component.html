@@ -1,0 +1,11 @@
+<div>
+    <mat-selection-list #shoes [multiple]="false">
+        <h1>Lugares Listados ir:</h1>
+        <mat-list-option *ngFor="let lugar of _lugares" [value]="shoe">
+          <p class="listar"> <span class="lista-span">{{lugar.lugar}}</span> - 
+            <a [routerLink]="['/editar', { find: lugar.lugar }]"><button mat-button color="primary">Editar</button></a> |
+            <button mat-button color="accent">Excluir</button> 
+         </p>
+        </mat-list-option>
+      </mat-selection-list>
+</div>

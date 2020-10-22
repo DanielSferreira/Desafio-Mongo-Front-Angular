@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from './config.service';
+import { ConfigService } from '../../config.service';
 import { FormGroup, FormControl } from '@angular/forms';
 interface Estados {
   value: string;
@@ -18,11 +18,12 @@ class Lugare {
   pontosTuristicos:string
 }
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-form-lugares',
+  templateUrl: './form-lugares.component.html',
+  styleUrls: ['./form-lugares.component.css']
 })
-export class AppComponent implements OnInit{
+export class FormLugaresComponent implements OnInit {
+
   public constructor(private conn: ConfigService)  {  }
   form: FormGroup;
   ngOnInit()
