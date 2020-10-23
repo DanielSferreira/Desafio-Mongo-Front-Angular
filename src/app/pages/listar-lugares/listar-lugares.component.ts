@@ -17,7 +17,7 @@ export class ListarLugaresComponent implements OnInit {
 
   public constructor(private conn: ConfigService)  {  }
 
-  private _lugares:lugares;
+  public _lugares:lugares;
   ngOnInit(): void {
     let res = this.conn.getLugares();
     

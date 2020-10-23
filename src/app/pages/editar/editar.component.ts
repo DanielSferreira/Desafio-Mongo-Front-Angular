@@ -7,16 +7,18 @@ interface Estados {
   text: string;
 }
 interface lugares {
+  id: string,
   lugar: string,
   descricao: string,
   status: string,
-  pontosTuristicos: string
+  pontosTuristicos: any
 }
 class Lugare {
+  id: string;
   lugar: string;
   descricao: string;
   status: string;
-  pontosTuristicos: string
+  pontosTuristicos: any
 }
 @Component({
   selector: 'app-editar',
@@ -30,21 +32,25 @@ export class EditarComponent implements OnInit {
     private conn: ConfigService) { }
 
   form: FormGroup;
-  private res;
+  public res:lugares;
 
-private pontos;
+  public pontos: string;
   ngOnInit(): void {
     this.res = new Lugare();
-    
-    this.conn.getLugaresByLugar(this.route.snapshot.paramMap.get("find")).subscribe(a => {this.res = a;console.log(a)});
-    console.log(this.res.pontosTuristicos);
-    
-    this.pontos = this.res.pontosTuristicos;
+    console.log("aqui vai");
+
+    this.conn.getLugaresByLugar(this.route.snapshot.paramMap.get("find")).subscribe((a: Lugare) => { 
+      this.res = a; 
+      this.pontos = a.pontosTuristicos.join('\n');
+       console.log("toUp");
+       console.log(a);
+    });
     this.createForm(this.res);
   }
 
   createForm(lugar: lugares) {
     this.form = new FormGroup({
+      id: new FormControl(lugar.id),
       lugar: new FormControl(lugar.lugar),
       descricao: new FormControl(lugar.descricao),
       status: new FormControl(lugar.status),
@@ -54,6 +60,7 @@ private pontos;
 
   setlugar() {
     const lugar1: lugares = {
+      id: this.res.id,
       lugar: this.form.controls["lugar"].value,
       descricao: this.form.controls["descricao"].value,
       status: this.form.controls["status"].value,
@@ -61,7 +68,7 @@ private pontos;
     }
     console.log(lugar1);
 
-    let res = this.conn.setLugares(lugar1);
+    let res = this.conn.putLugares(lugar1);
     console.log(res.subscribe(a => console.log(a)));
   }
 

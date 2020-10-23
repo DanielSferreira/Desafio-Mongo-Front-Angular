@@ -1,30 +1,21 @@
 <div class="card" action="">
-    <h1>Lugares que eu quero ir:</h1>
-    <form class="form" [formGroup]="form">
-      <mat-form-field class="example-full-width">
-        <mat-label>Lugar</mat-label>
-        <input matInput autofocus formControlName="lugar" [value]="res.lugar">
-      </mat-form-field>
-  
-      <mat-form-field class="example-full-width">
-        <mat-label>Descrição</mat-label>
-        <textarea matInput formControlName="descricao" [value]="res.descricao"></textarea>
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Status:</mat-label>
-        <mat-select formControlName="status">
-          <mat-option *ngFor="let estado of Estados" [value]="res.value" >
-            {{estado.text}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field class="example-full-width">
-        <mat-label>Pontos Turisticos</mat-label>
-        <textarea matInput formControlName="pontosTuristicos" [value]="pontos"></textarea>
-      </mat-form-field>
-  
-      <button type="submit" mat-button (click)="setlugar()"> Enbiar </button>
-    </form>
-  </div>
+  <h1>Lugares que eu quero ir:</h1>
+  <form class="form" [formGroup]="form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Lugar</mat-label>
+      <input matInput autofocus formControlName="lugar" [value]="res.lugar">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput formControlName="descricao" [value]="res.descricao"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Pontos Turisticos</mat-label>
+      <textarea matInput formControlName="pontosTuristicos" rows="8" [value]="pontos"></textarea>
+    </mat-form-field>
+
+    <button type="submit" mat-button (click)="setlugar()"> Enbiar </button>
+  </form>
+</div>
