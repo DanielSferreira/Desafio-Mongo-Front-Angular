@@ -10,7 +10,7 @@ interface lugares {
   pontosTuristicos:string
 }
 interface lugaresUpdate {
-  id:string,
+  _id:string,
   lugar:string,
   descricao: string,
   status:string,
@@ -49,12 +49,20 @@ export class ConfigService {
     console.log(lugar);
     
     return this.http.put<lugaresUpdate>(this.configUrl+"atualizar/",{
-      id:lugar.id,
+      _id:lugar._id,
       lugar:lugar.lugar,
       descricao:lugar.descricao,
       status:parseInt(lugar.status),
-      pontosTuristicos:  lugar.pontosTuristicos.split("\n")
+      pontosTuristicos:  lugar.pontosTuristicos
     },this.httpOptions).pipe(map(a => a ), catchError(this.handleError));    
+  }
+
+  delLugares(lugar: string) {
+    console.log(lugar);
+    return this.http.delete<lugaresUpdate>(
+        this.configUrl+"delete/"+lugar,
+        this.httpOptions)
+      .pipe(map(a => a ), catchError(this.handleError));    
   }
 
   private handleError(error: HttpErrorResponse) {

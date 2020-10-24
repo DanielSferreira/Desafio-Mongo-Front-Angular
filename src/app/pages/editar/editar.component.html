@@ -1,21 +1,22 @@
-<div class="card" action="">
+<div class="card">
   <h1>Lugares que eu quero ir:</h1>
-  <form class="form" [formGroup]="form">
-    <mat-form-field class="example-full-width">
-      <mat-label>Lugar</mat-label>
-      <input matInput autofocus formControlName="lugar" [value]="res.lugar">
-    </mat-form-field>
+  <div class="form">
+    
+    <input [value]="responseData._id">
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Descrição</mat-label>
-      <textarea matInput formControlName="descricao" [value]="res.descricao"></textarea>
-    </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Pontos Turisticos</mat-label>
-      <textarea matInput formControlName="pontosTuristicos" rows="8" [value]="pontos"></textarea>
-    </mat-form-field>
+    <label>place</label>
+    <input autofocus (change)="updateLugar(luga.value)" #luga [value]="responseData.lugar">
 
-    <button type="submit" mat-button (click)="setlugar()"> Enbiar </button>
-  </form>
+    <label>Descrição</label>
+    <textarea  (change)="updateDescr(desc.value)" #desc value={{responseData.descricao}}></textarea>
+
+    <label>Staus</label>
+    <input (change)="updateStatus(stats.value)" #stats [value]="responseData.status">
+
+    <label>Pontos Turisticos</label>
+    <textarea rows="8" (change)="updatePontos(pts.value)" #pts [value]="pontos"></textarea>
+
+    <button type="submit" (click)="setlugar()" mat-button> Enviar </button>
+  </div>
 </div>
