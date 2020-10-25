@@ -1,46 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router'; 
 import { ConfigService } from 'src/app/config.service';
-interface Estados {
-  value: string;
-  text: string;
-} 
-class Lugares {
-  _id: string;
-  lugar: string;
-  descricao: string;
-  status: string;
-  pontosTuristicos: string[]
-}
+import { LugaresEdit, Estados } from "./../../interfaces";
+
 @Component({
   selector: 'app-editar',
   templateUrl: './editar.component.html',
   styleUrls: ['./editar.component.css']
 })
+
 export class EditarComponent implements OnInit {
 
-  constructor( private route: ActivatedRoute, private conn: ConfigService) { }
+  constructor( private router: Router, private route: ActivatedRoute, private conn: ConfigService) { }
 
   public form: FormGroup;
   public title: string;
-  
+
   public async getF():Promise<any> 
   { 
     return this.conn.getLugaresByLugar(this.route.snapshot.paramMap.get("find")).toPromise(); 
   }
-
   public async ngOnInit() 
   {
-    this.createForm(new Lugares())
+    this.createForm(new LugaresEdit())
     await this.getF().then(
-      (a:Lugares) => {
+      (a:LugaresEdit) => {
         this.createForm(a);
         this.title = a.lugar;
       });
   }
 
-  createForm(lugar: Lugares) 
+  createForm(lugar: LugaresEdit) 
   {
     if(lugar.pontosTuristicos === undefined) lugar.pontosTuristicos = [""];
     this.form = new FormGroup({
@@ -52,9 +43,11 @@ export class EditarComponent implements OnInit {
     });
   }
   
-  setlugar() 
+  putlugar() 
   {
     this.conn.putLugares(this.form.value).toPromise().then(a => console.log(a));
+    this.router.navigate(["listar/"]);
+
   }
 
   Estados: Estados[] = [

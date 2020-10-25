@@ -1,7 +1,7 @@
 <div class="card">
   <h1>Alterando lugar:<b> {{title}} </b></h1>
   
-  <form class="form" [formGroup]="form" (submit)="setlugar()">
+  <form class="form" [formGroup]="form" (submit)="putlugar()">
 
     <input formControlName="_id" type="hidden">
     <mat-form-field class="example-full-width">
@@ -9,12 +9,12 @@
       <input required matInput autofocus formControlName="lugar">
     </mat-form-field> 
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Descrição</mat-label>
       <textarea required matInput rows="7" formControlName="descricao" ></textarea>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field >
       <mat-label>Status:</mat-label>
       <mat-select required formControlName="status">
         <mat-option *ngFor="let estado of Estados" [value]="estado.value">
