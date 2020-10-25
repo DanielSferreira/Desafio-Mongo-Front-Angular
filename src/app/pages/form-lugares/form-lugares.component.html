@@ -3,17 +3,17 @@
     <form class="form" [formGroup]="form">
       <mat-form-field class="example-full-width">
         <mat-label>Lugar</mat-label>
-        <input matInput autofocus formControlName="lugar">
+        <input required matInput autofocus formControlName="lugar">
       </mat-form-field>
   
       <mat-form-field class="example-full-width">
         <mat-label>Descrição</mat-label>
-        <textarea matInput formControlName="descricao"></textarea>
+        <textarea required rows="12" matInput formControlName="descricao"></textarea>
       </mat-form-field>
   
       <mat-form-field appearance="fill">
         <mat-label>Status:</mat-label>
-        <mat-select formControlName="status">
+        <mat-select  required formControlName="status">
           <mat-option *ngFor="let estado of Estados" [value]="estado.value" >
             {{estado.text}}
           </mat-option>
@@ -22,9 +22,9 @@
   
       <mat-form-field class="example-full-width">
         <mat-label>Pontos Turisticos</mat-label>
-        <textarea matInput formControlName="pontosTuristicos"></textarea>
+        <textarea required rows="8" matInput formControlName="pontosTuristicos"></textarea>
       </mat-form-field>
   
-      <button type="submit" mat-button (click)="setlugar()"> Enbiar </button>
+      <button type="submit" mat-button (click)="setlugar()"> Adicionar Lugar </button>
     </form>
   </div>

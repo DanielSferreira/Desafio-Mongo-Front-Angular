@@ -1,22 +1,33 @@
 <div class="card">
-  <h1>Lugares que eu quero ir:</h1>
-  <div class="form">
-    
-    <input [value]="responseData._id">
+  <h1>Alterando lugar:<b> {{title}} </b></h1>
+  
+  <form class="form" [formGroup]="form" (submit)="setlugar()">
 
+    <input formControlName="_id" type="hidden">
+    <mat-form-field class="example-full-width">
+      <mat-label>Lugar</mat-label>
+      <input required matInput autofocus formControlName="lugar">
+    </mat-form-field> 
 
-    <label>place</label>
-    <input autofocus (change)="updateLugar(luga.value)" #luga [value]="responseData.lugar">
+    <mat-form-field class="example-full-width">
+      <mat-label>Descrição</mat-label>
+      <textarea required matInput rows="7" formControlName="descricao" ></textarea>
+    </mat-form-field>
 
-    <label>Descrição</label>
-    <textarea  (change)="updateDescr(desc.value)" #desc value={{responseData.descricao}}></textarea>
+    <mat-form-field appearance="fill">
+      <mat-label>Status:</mat-label>
+      <mat-select required formControlName="status">
+        <mat-option *ngFor="let estado of Estados" [value]="estado.value">
+          {{estado.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <label>Staus</label>
-    <input (change)="updateStatus(stats.value)" #stats [value]="responseData.status">
+    <mat-form-field class="example-full-width">
+      <mat-label>Pontos Turisticos</mat-label>
+      <textarea matInput required rows="5" formControlName="pontosTuristicos"></textarea>
+    </mat-form-field>
 
-    <label>Pontos Turisticos</label>
-    <textarea rows="8" (change)="updatePontos(pts.value)" #pts [value]="pontos"></textarea>
-
-    <button type="submit" (click)="setlugar()" mat-button> Enviar </button>
-  </div>
+    <button type="submit" mat-button> Fazer Alteração </button>
+  </form>
 </div>

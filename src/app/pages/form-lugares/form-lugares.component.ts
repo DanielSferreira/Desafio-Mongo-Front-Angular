@@ -11,7 +11,7 @@ interface lugares {
   status:string,
   pontosTuristicos:string
 }
-class Lugare {
+class Lugares {
   lugar:string;
   descricao: string;
   status:string;
@@ -28,10 +28,8 @@ export class FormLugaresComponent implements OnInit {
   form: FormGroup;
   ngOnInit()
   {
-    this.createForm(new Lugare());
-    console.log("Tem Certeza?");
+    this.createForm(new Lugares());
     let res = this.conn.getLugares();
-    console.log(res.subscribe(a =>  console.log(a)));
   }
   createForm(lugar: lugares) {
     this.form = new FormGroup({

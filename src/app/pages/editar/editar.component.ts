@@ -1,24 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router'; 
 import { ConfigService } from 'src/app/config.service';
 interface Estados {
   value: string;
   text: string;
-}
-interface lugares {
-  _id: string,
-  lugar: string,
-  descricao: string,
-  status: string,
-  pontosTuristicos: any
-}
-class Lugare {
+} 
+class Lugares {
   _id: string;
   lugar: string;
   descricao: string;
   status: string;
-  pontosTuristicos: any
+  pontosTuristicos: string[]
 }
 @Component({
   selector: 'app-editar',
@@ -29,32 +22,39 @@ export class EditarComponent implements OnInit {
 
   constructor( private route: ActivatedRoute, private conn: ConfigService) { }
 
-  public responseData: lugares;
-  public lugaresAlterados: lugares;
-  public pontos: string;
-
-  public async getF():Promise<any> { 
-    return this.conn.getLugaresByLugar(this.route.snapshot.paramMap.get("find")).toPromise(); }
-
-  public async ngOnInit() {
-
-    let b = await this.getF().then(a => this.responseData = a);
-    console.log(b);
-    this.pontos = b.pontosTuristicos.join('\n');
-    this.lugaresAlterados = this.responseData;
+  public form: FormGroup;
+  public title: string;
+  
+  public async getF():Promise<any> 
+  { 
+    return this.conn.getLugaresByLugar(this.route.snapshot.paramMap.get("find")).toPromise(); 
   }
- 
-  updateLugar(t){ this.lugaresAlterados.lugar = t }
-  updateDescr(t){ this.lugaresAlterados.descricao = t }
-  updateStatus(t){ this.lugaresAlterados.status = t }
-  updatePontos(t){ this.lugaresAlterados.pontosTuristicos = t.split("\n") }
 
-  setlugar() {
-    
-    console.log(this.lugaresAlterados);
-    
-    this.conn.putLugares(this.lugaresAlterados).subscribe(a => console.log(a));
-    
+  public async ngOnInit() 
+  {
+    this.createForm(new Lugares())
+    await this.getF().then(
+      (a:Lugares) => {
+        this.createForm(a);
+        this.title = a.lugar;
+      });
+  }
+
+  createForm(lugar: Lugares) 
+  {
+    if(lugar.pontosTuristicos === undefined) lugar.pontosTuristicos = [""];
+    this.form = new FormGroup({
+      _id: new FormControl(lugar._id),
+      lugar: new FormControl(lugar.lugar),
+      descricao: new FormControl(lugar.descricao),
+      status: new FormControl(lugar.status),
+      pontosTuristicos: new FormControl(lugar.pontosTuristicos.join('\n'))
+    });
+  }
+  
+  setlugar() 
+  {
+    this.conn.putLugares(this.form.value).toPromise().then(a => console.log(a));
   }
 
   Estados: Estados[] = [

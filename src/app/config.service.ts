@@ -36,8 +36,8 @@ export class ConfigService {
   getLugaresByLugar(str: string) {
     return this.http.get<lugaresUpdate>(this.configUrl+`listar/${str}`,this.httpOptions).pipe(map(a => a ), catchError(this.handleError));    
   }
-  setLugares(lugar: lugares) {
-    return this.http.post<lugares>(this.configUrl+"salvarLugar/",{
+  setLugares(lugar: lugares):any {
+    return this.http.post<any>(this.configUrl+"salvarLugar/",{
       lugar:lugar.lugar,
       descricao:lugar.descricao,
       status:parseInt(lugar.status),
@@ -48,17 +48,17 @@ export class ConfigService {
   putLugares(lugar: lugaresUpdate) {
     console.log(lugar);
     
-    return this.http.put<lugaresUpdate>(this.configUrl+"atualizar/",{
+    return this.http.put<string>(this.configUrl+"atualizar/",{
       _id:lugar._id,
       lugar:lugar.lugar,
       descricao:lugar.descricao,
       status:parseInt(lugar.status),
-      pontosTuristicos:  lugar.pontosTuristicos
+      pontosTuristicos:  lugar.pontosTuristicos.split("\n")
     },this.httpOptions).pipe(map(a => a ), catchError(this.handleError));    
   }
 
   delLugares(lugar: string) {
-    console.log(lugar);
+    console.log(this.configUrl+"delete/"+lugar);
     return this.http.delete<lugaresUpdate>(
         this.configUrl+"delete/"+lugar,
         this.httpOptions)
@@ -69,7 +69,7 @@ export class ConfigService {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
-      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+      console.error("Ocorreu um erro");
       console.error(error.status);
       console.error(error.error);
     }
